@@ -81,7 +81,7 @@ def main():
 
     else:
       map_file_data = cv2.imread( image_filename )
-      map_image = "/workspace/media/tmp.jpg"
+      map_image = "/workspace/sample_data/tmp.png"
       cv2.imwrite( map_image, map_file_data )
       with open(map_image, "rb") as f:
         map_file_data = f.read()

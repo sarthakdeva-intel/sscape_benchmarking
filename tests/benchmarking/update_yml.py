@@ -18,9 +18,9 @@ def build_args():
   parser.add_argument('--network', default='scenescape', help='Configure the network name')
   return parser
 
-def yml_add_service( network_name, add_secrets ):
+def yml_add_service( network_name, add_secrets, image):
   srv = {}
-  srv['image'] = 'scenescape:latest'
+  srv['image'] = image
   srv['init'] = True
   srv['networks'] = { network_name : None }
   srv['depends_on'] = ['broker', 'ntpserv']
@@ -37,7 +37,7 @@ def yml_add_camera(docker_compose, network, add_camera, mqttid, \
                   ovcores=None, volumes=None, rate=None):
   #print("Add cameras IDs",  mqttid, len(mqttid))
   if not add_camera in docker_compose['services']:
-    srv = yml_add_service( network, ['percebro.auth', {'source':'root-cert','target':'certs/scenescape-ca.pem'}] )
+    srv = yml_add_service( network, ['percebro.auth', {'source':'root-cert','target':'certs/scenescape-ca.pem'}], 'scenescape-percebro:latest')
     srv['command'] = ['percebro']
     assert len(mqttid) == len(input)
     if len(intrinsics) != 1:
@@ -71,6 +71,9 @@ def yml_load(filename, image_version=None):
     docker_compose = yaml.load(input_fd,Loader=yaml.Loader)
   if image_version:
     for svc in docker_compose['services']:
+      if svc == "ntpserv":
+        continue
+      docker_compose['services'][svc]['image'] = docker_compose['services'][svc]['image'].split(':')[0]
       docker_compose['services'][svc]['image'] += ':' + image_version
       print("After load Svc", svc, "has image", docker_compose['services'][svc]['image'])
   return docker_compose
@@ -113,7 +116,7 @@ def yml_remove_service(docker_compose, service):
 
 def yml_add_recorder_service(docker_compose,recorder_name, network_name):
   if not recorder_name in docker_compose['services']:
-    srv = yml_add_service( network_name, ['percebro.auth'] )
+    srv = yml_add_service( network_name, ['percebro.auth'], 'scenescape-manager:latest')
     srv['command'] = f'bash -c "PYTHONPATH=/workspace tests/perf_tests/scene_perf/scene_mqtt_recorder.py "'
     srv['volumes'] = ['./:/workspace' ]
     srv['tty'] = True

@@ -59,7 +59,7 @@ def main():
         cv2.line( map_data, (c, 0), (c,rows-1), (255,255,255), 3 )
 
       map_image = 'tmp.jpg'
-      map_image = "/workspace/media/tmp.jpg"
+      map_image = "/workspace/sample_data/tmp.png"
       cv2.imwrite( map_image, map_data )
   
       with open(map_image, "rb") as f:

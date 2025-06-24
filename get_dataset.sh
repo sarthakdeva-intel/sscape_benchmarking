@@ -30,7 +30,7 @@ cp benchmarking_system.sh ${TARGET}/tests/perf_tests/
 pushd ${TARGET}
 make -C docker/ install-models MODELS=all
 
-docker/scenescape-start --shell tests/perf_tests/benchmarking_system.sh
+tools/scenescape-start --shell tests/perf_tests/benchmarking_system.sh
 
 #Scene perf test:
 

@@ -57,7 +57,7 @@ def utils_update_docker( supass, dbroot, docker_opts ):
   return utils_run_command( bring_up_command )
 
 def utils_run_sscape_cmdline( network_name, cmd ):
-  sscape_cmd = f'docker/scenescape-start --network {network_name} {cmd}'
+  sscape_cmd = f'tools/scenescape-start --network {network_name} {cmd}'
   sscape_cmd_split = sscape_cmd.split(' ')
   return utils_run_command( sscape_cmd_split )
 

@@ -14,7 +14,7 @@ sscape_benchmarking/tests/benchmark_host.sh ${OUTPUT_DIR}
 make -C docker/ MODELS=all install-models
 # Run inference test:
 mkdir -p ${OUTPUT_DIR}/${HOSTNAME}
-docker/scenescape-start sscape_benchmarking/tests/benchmark_inference.sh ${OUTPUT_DIR}/${HOSTNAME}
+tools/scenescape-start sscape_benchmarking/tests/benchmark_inference.sh ${OUTPUT_DIR}/${HOSTNAME}
 
 # Run scene test:
 # sscape_benchmarking/tests/benchmark_scene.sh

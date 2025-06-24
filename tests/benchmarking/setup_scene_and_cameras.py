@@ -4,7 +4,7 @@ import os
 import numpy as np
 import json
 import cv2
-from sscape.rest_client import RESTClient
+from scene_common.rest_client import RESTClient
 from argparse import ArgumentParser
 
 
@@ -54,7 +54,7 @@ def main():
 
       scene_map_fname = '{}/{}'.format(args.dataset,scene_data['map'])
       map_data = cv2.imread( scene_map_fname )
-      map_image = "/workspace/media/tmp.jpg"
+      map_image = "/workspace/sample_data/tmp.png"
       cv2.imwrite( map_image, map_data )
       with open(map_image, "rb") as f:
         map_data = f.read()
@@ -65,7 +65,7 @@ def main():
 
       scene_map_fname = '{}/{}'.format(args.dataset,scene_data['map'])
       map_data = cv2.imread( scene_map_fname )
-      map_image = "/workspace/media/tmp.jpg"
+      map_image = "/workspace/sample_data/tmp.png"
       cv2.imwrite( map_image, map_data )
       with open(map_image, "rb") as f:
         map_data = f.read()

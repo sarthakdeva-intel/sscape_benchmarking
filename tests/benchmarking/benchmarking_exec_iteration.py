@@ -52,7 +52,7 @@ def benchmark_iteration_setup_containers( docker_compose, sys_cfg, camera_info, 
   if 'MODELCONFIG' in sys_cfg:
     modelconfig = sys_cfg['MODELCONFIG']
 
-  volumes = ['./models:/opt/intel/openvino/deployment_tools/intel_models', f'./{input_base}:/videos' ]
+  volumes = ['./model_installer/models:/opt/intel/openvino/deployment_tools/intel_models', f'./{input_base}:/videos' ]
 
   for cam in cameras:
     found = False
@@ -79,7 +79,8 @@ def benchmark_iteration_setup_containers( docker_compose, sys_cfg, camera_info, 
                                                 'controller.auth',
                                                 {'source':'root-cert', 'target':'certs/scenescape-ca.pem'},
                                                 {'source':'vdms-client-key', 'target':'certs/scenescape-vdms-c.key'},
-                                                {'source':'vdms-client-cert', 'target':'certs/scenescape-vdms-c.crt'}])
+                                                {'source':'vdms-client-cert', 'target':'certs/scenescape-vdms-c.crt'}],
+                                                'scenescape-controller:latest' )
   #scene_controller = yml_add_service( network, ['django', 'controller.auth'] )
   scene_controller['volumes'] = ['./${DBROOT}/media:/home/scenescape/SceneScape/media', './:/workspace']
   #scene_controller['command'] = 'controller --broker broker.scenescape.intel.com --ntp ntpserv --regulaterate 0.1'
@@ -89,7 +90,7 @@ def benchmark_iteration_setup_containers( docker_compose, sys_cfg, camera_info, 
   docker_compose['services'][scene_controller_name] = scene_controller
 
   #add scene_recorder
-  scene_recorder = yml_add_service( network, [] )
+  scene_recorder = yml_add_service( network, [{'source':'root-cert', 'target':'certs/scenescape-ca.pem'}], 'scenescape-manager:latest' )
   scene_recorder['volumes'] = ['./:/workspace']
   scene_recorder['environment'] = ['SUPASS']
   scene_recorder['command'] = 'bash -c "SUPASS=${SUPASS} PYTHONPATH=/workspace tests/perf_tests/scene_perf/scene_mqtt_recorder.py"'
