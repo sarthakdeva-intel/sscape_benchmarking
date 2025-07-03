@@ -84,7 +84,7 @@ def benchmark_iteration_setup_containers( docker_compose, sys_cfg, camera_info, 
   #scene_controller = yml_add_service( network, ['django', 'controller.auth'] )
   scene_controller['volumes'] = ['./${DBROOT}/media:/home/scenescape/SceneScape/media', './:/workspace']
   #scene_controller['command'] = 'controller --broker broker.scenescape.intel.com --ntp ntpserv --regulaterate 0.1'
-  scene_controller['command'] = 'controller --broker broker.scenescape.intel.com --ntp ntpserv'
+  scene_controller['command'] = 'controller --broker broker.scenescape.intel.com --ntp ntpserv --rewriteBadTime'
   scene_controller['environment'] = [ 'DBROOT' ]
   scene_controller['tty'] = True
   docker_compose['services'][scene_controller_name] = scene_controller

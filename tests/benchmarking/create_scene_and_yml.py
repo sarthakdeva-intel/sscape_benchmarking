@@ -4,7 +4,7 @@ import os
 import numpy as np
 import json
 import cv2
-from sscape.rest_client import RESTClient
+from scene_common.rest_client import RESTClient
 from argparse import ArgumentParser
 from update_yml import yml_load, yml_save, yml_add_camera
 

@@ -147,9 +147,10 @@ def main():
     for iteration in range(min_cameras, sys_cfg['MAX_CAMERAS']):
       print("Starting iteration", iteration)
       cameras.append(f'Cam{iteration}')
-
+      print(len(cameras), "cameras in use")
       if 'CAMERA_ACCUM_RATE' in sys_cfg:
         camera_rate = float(sys_cfg['CAMERA_ACCUM_RATE']) / float(len(cameras))
+        print("FRAME RATE", camera_rate)
 
       iterate_tripwires = all_tripwires
       num_wires = 1

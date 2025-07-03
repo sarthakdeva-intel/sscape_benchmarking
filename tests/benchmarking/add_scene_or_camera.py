@@ -3,7 +3,7 @@
 import os
 import numpy as np
 import cv2
-from sscape.rest_client import RESTClient
+from scene_common.rest_client import RESTClient
 from argparse import ArgumentParser
 
 
